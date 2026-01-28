@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honyl — Graphic Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #FAFAF8;
+            --text: #1A1A1A;
+            --accent: #2B2B2B;
+            --border: #E0E0DC;
+            --hover: #F5F5F2;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #666;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .bio {
+            margin-top: 30px;
+            font-size: 1.05rem;
+            color: #555;
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 30px 0;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Projects Grid */
+        .projects-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 50px;
+            letter-spacing: -0.01em;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px 40px;
+        }
+
+        .project-card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.3s; }
+        .project-card:nth-child(2) { animation-delay: 0.4s; }
+        .project-card:nth-child(3) { animation-delay: 0.5s; }
+        .project-card:nth-child(4) { animation-delay: 0.6s; }
+        .project-card:nth-child(5) { animation-delay: 0.7s; }
+
+        .project-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            background: #f5f5f5;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+        }
+
+        .project-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+
+        .project-info {
+            padding: 0 10px;
+        }
+
+        .project-category {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #999;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .project-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .contact-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 1.1rem;
+            letter-spacing: 0.03em;
+            padding: 15px 35px;
+            border: 1px solid var(--accent);
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .lightbox.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            header {
+                padding: 40px 0 30px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Honyl</h1>
+            <div class="subtitle">Graphic Designer</div>
+            <p class="bio">Spécialisé en communication digitale, je crée des visuels qui captivent et communiquent avec impact.</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="projects-section" id="projets">
+            <h2 class="section-title">Projets Sélectionnés</h2>
+            
+            <div class="projects-grid">
+                <!-- Projet 1: My Books Shoop -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project1')">
+                        <img src="Monday1.jpg" alt="My Books Shoop - Communication" id="project1">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Branding & Communication</div>
+                        <h3 class="project-title">My Books Shoop</h3>
+                        <p class="project-description">Campagne de communication visuelle pour une librairie moderne, mettant en avant l'inspiration et la motivation à travers des visuels dynamiques et colorés.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 2: Week-end -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project2')">
+                        <img src="Week-end_copie.jpg" alt="Week-end Communication" id="project2">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Branding & Communication</div>
+                        <h3 class="project-title">Campagne Week-end</h3>
+                        <p class="project-description">Design énergique et contemporain pour annoncer le début du week-end, utilisant des éléments graphiques modernes et une typographie audacieuse.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 3: MK Michelle - Social Media -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project3')">
+                        <img src="MK_FOLLOWER.jpg" alt="MK Michelle Followers" id="project3">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Social Media Design</div>
+                        <h3 class="project-title">MK Michelle — 2M Milestone</h3>
+                        <p class="project-description">Célébration visuelle des 2 millions de followers d'une influenceuse majeure. Design vibrant qui traduit la gratitude et le succès digital.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 4: Partnership -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project4')">
+                        <img src="PARTNER.jpg" alt="Partnership Announcement" id="project4">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Social Media Design</div>
+                        <h3 class="project-title">Annonce de Partenariat</h3>
+                        <p class="project-description">Communication stratégique pour le lancement d'un nouveau partenariat, avec une identité visuelle forte et professionnelle.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 5: Graduation Backdrop -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project5')">
+                        <img src="Backdrop_2.jpg" alt="Graduation Ceremony Backdrop" id="project5">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Event Design</div>
+                        <h3 class="project-title">Cérémonie de Remise de Diplômes</h3>
+                        <p class="project-description">Backdrop professionnel pour une cérémonie de graduation, intégrant les logos des sponsors et créant une atmosphère solennelle et festive.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 6: Roll-up Célébration de Vie -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project7')">
+                        <img src="Bâche_2.jpg" alt="Célébration de Vie Roll-up" id="project7">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Event Design</div>
+                        <h3 class="project-title">Célébration de Vie</h3>
+                        <p class="project-description">Roll-up élégant pour un événement commémoratif, alliant dignité et célébration avec une mise en page équilibrée et respectueuse.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 7: Faire-part Mariage Rose -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project8')">
+                        <img src="Fairt-part_rose.jpg" alt="Faire-part Mariage Rose" id="project8">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Print Design</div>
+                        <h3 class="project-title">Faire-part Mariage — Éric & Ashley</h3>
+                        <p class="project-description">Invitation de mariage élégante dans des tons roses doux, mêlant romantisme et sophistication avec une typographie raffinée.</p>
+                    </div>
+                </div>
+
+                <!-- Projet 8: Faire-part Mariage Coral -->
+                <div class="project-card">
+                    <div class="project-image-wrapper" onclick="openLightbox('project9')">
+                        <img src="Fairt-part.jpg" alt="Faire-part Mariage" id="project9">
+                    </div>
+                    <div class="project-info">
+                        <div class="project-category">Print Design</div>
+                        <h3 class="project-title">Faire-part Mariage — Jehodin & Nelson</h3>
+                        <p class="project-description">Design floral délicat pour une invitation de mariage, utilisant une palette de couleurs chaudes et une composition harmonieuse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <h2 class="contact-title">Travaillons Ensemble</h2>
+            <div class="contact-links">
+                <a href="mailto:votre.email@example.com" class="contact-link">Email</a>
+                <a href="https://www.behance.net/votreprofil" target="_blank" class="contact-link">Behance</a>
+                <a href="https://www.instagram.com/votrecompte" target="_blank" class="contact-link">Instagram</a>
+                <a href="https://www.linkedin.com/in/votreprofil" target="_blank" class="contact-link">LinkedIn</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Honyl. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-close">×</div>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightbox-img">
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(imageId) {
+            const img = document.getElementById(imageId);
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
